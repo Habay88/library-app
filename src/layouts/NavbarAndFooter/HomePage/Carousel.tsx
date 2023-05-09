@@ -11,7 +11,7 @@ const Carousel = () => {
   useEffect(() =>{
     const fetchBooks = async () =>{
       const baseUrl:string ="http://localhost:1988/api/books";
-      const url: string = `$(baseUrl)?page=0&size=9`;
+      const url: string = `${baseUrl}?page=0&size=9`;
       const response = await fetch(url);
       if(!response.ok){
         throw new Error('Something went wrong !!');
@@ -72,23 +72,23 @@ const Carousel = () => {
         <div className="carousel-inner">
           <div className="carousel-item active">
             <div className="row d-flex justify-content-center align-items-center">
-              <ReturnBook />
-              <ReturnBook />
-              <ReturnBook />
+             {books.slice(0, 3).map(book => (
+              <ReturnBook book={book} key= {book.id} />
+             ))}
             </div>
           </div>
           <div className="carousel-item">
             <div className="row d-flex justify-content-center align-items-center">
-              <ReturnBook />
-              <ReturnBook />
-              <ReturnBook />
+            {books.slice(3, 6).map(book => (
+              <ReturnBook book={book} key= {book.id} />
+             ))}
             </div>
           </div>
           <div className="carousel-item ">
             <div className="row d-flex justify-content-center align-items-center">
-              <ReturnBook />
-              <ReturnBook />
-              <ReturnBook />
+            {books.slice(6, 9).map(book => (
+              <ReturnBook book={book} key= {book.id} />
+             ))}
             </div>
           </div>
         </div>
@@ -120,19 +120,7 @@ const Carousel = () => {
       {/* mobile */}
       <div className="d-lg-none mt-3">
         <div className="row d-flex justify-content-center align-items-center">
-          <div className="text-center">
-            <img
-              src={require("./../../../Images/BooksImages/book-luv2code-1000.png")}
-              width="151"
-              height="233"
-              alt="book"
-            />
-            <h6>Book</h6>
-            <p>Luv2Code</p>
-            <a className="btn main-color text-white" href="#">
-              Reserve
-            </a>
-          </div>
+         <ReturnBook book={books[7]} key={books[7].id}/>
         </div>
       </div>
       <div className="homepage-carousel-title mt-3">
