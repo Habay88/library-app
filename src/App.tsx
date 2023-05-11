@@ -10,10 +10,16 @@ import SearchBooksPage from './searchbookspage/SearchBooksPage';
 export const App =()=> {
   return (
     <div>
+
   <Navbar/>
-{/*  <HomePage/> */}
+
+<HomePage/>
+
 <SearchBooksPage/>
+
   <Footer/>
+
+  
   </div>
   );
 }
