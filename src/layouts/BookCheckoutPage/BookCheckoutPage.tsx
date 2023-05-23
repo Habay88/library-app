@@ -13,7 +13,7 @@ const BookCheckoutPage = () => {
 
   useEffect(() => {
       const fetchBook = async () => {
-          const baseUrl: string = `http://localhost:8080/api/books/${bookId}`;
+          const baseUrl: string = `http://localhost:1988/api/books/${bookId}`;
 
           const response = await fetch(baseUrl);
 
@@ -66,7 +66,8 @@ const BookCheckoutPage = () => {
                       {book?.img ?
                           <img src={book?.img} width='226' height='349' alt='Book' />
                           :
-                          <img src={require('./../../Images/BooksImages/book-luv2code-1000.png')} width='226'
+                          <img src={require('./../../Images/BooksImages/book-luv2code-1000.png')} 
+                          
                               height='349' alt='Book' />
                       }
                   </div>
