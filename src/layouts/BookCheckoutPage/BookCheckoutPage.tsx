@@ -77,7 +77,7 @@ const BookCheckoutPage = () => {
                           <h2>{book?.title}</h2>
                           <h5 className='text-primary'>{book?.author}</h5>
                           <p className='lead'>{book?.description}</p>
-                          <StarsReviews rating={4} size={32}/>
+                          <StarsReviews rating={9} size={32}/>
                       </div>
                   </div>
               </div>
@@ -97,7 +97,7 @@ const BookCheckoutPage = () => {
                       <h2>{book?.title}</h2>
                       <h5 className='text-primary'>{book?.author}</h5>
                       <p className='lead'>{book?.description}</p>
-                      <StarsReviews rating={4} size={32}/>
+                      <StarsReviews rating={4.5} size={32}/>
                   </div>
               </div>
               <hr />
