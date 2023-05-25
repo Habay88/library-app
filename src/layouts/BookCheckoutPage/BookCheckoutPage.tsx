@@ -10,6 +10,11 @@ const BookCheckoutPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [httpError, setHttpError] = useState(null);
 
+  // Review state
+  const[review, setReviews] = useState<BookModel>();
+  const [totalStars, setTotalStars] = useState(0);
+  const [isLoadingReview, setIsLoadingReview] = useState(true);
+
   const bookId = window.location.pathname.split("/")[2];
 
   useEffect(() => {
@@ -43,6 +48,8 @@ const BookCheckoutPage = () => {
       setHttpError(error.message);
     });
   }, []);
+
+  
 
   if (isLoading) {
     return <SpinnerLoading />;
