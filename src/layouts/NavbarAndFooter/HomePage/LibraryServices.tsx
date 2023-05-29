@@ -1,6 +1,8 @@
+import { useOktaAuth } from "@okta/okta-react/bundles/types";
 import React from "react";
 
 const LibraryServices = () => {
+  const {authState} = useOktaAuth();
   return (
     <div className="container my-5">
       <div className="row p-4 align-items-center border shadow-lg">
