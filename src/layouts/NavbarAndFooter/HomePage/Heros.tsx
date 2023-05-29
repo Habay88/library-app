@@ -9,8 +9,8 @@ const Heros = () => {
             <div className="col-image-left"></div>
           </div>
 
-          <div className="col-4-md-4 container d-flex justify-content-center align-items-center">
-            <div className="m1-2">
+          <div className="col-4  col-md-4 container d-flex justify-content-center align-items-center">
+            <div className="ml-2">
               <h1>What have you been reading ?</h1>
               <p className="lead">
                 The library team would love to know what you have been reading
