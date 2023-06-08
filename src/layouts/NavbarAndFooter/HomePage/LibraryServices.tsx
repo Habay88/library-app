@@ -1,4 +1,4 @@
-import { useOktaAuth } from "@okta/okta-react/bundles/types";
+import { useOktaAuth } from "@okta/okta-react";
 import React from "react";
 
 const LibraryServices = () => {

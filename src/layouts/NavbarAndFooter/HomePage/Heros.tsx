@@ -2,8 +2,9 @@ import React from "react";
   import { useOktaAuth } from "@okta/okta-react";
 import { Link } from "react-router-dom";
 const Heros = () => {
+  const {authState} = useOktaAuth();
   return (
-    const {authState} = useOktaAuth();
+ 
     <div>
       <div className="d-none d-lg-block">
         <div className="row g-0 mt-5">

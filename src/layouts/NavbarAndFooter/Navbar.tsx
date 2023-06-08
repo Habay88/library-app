@@ -14,7 +14,7 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark main-color py-3">
       <div className="container-fluid">
-        <span className="navbar-brand">Work in Progress </span>
+        <span className="navbar-brand">L-I-M-S </span>
         <button
           className="navbar-toggler"
           type="button"
