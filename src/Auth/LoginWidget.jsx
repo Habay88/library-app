@@ -4,11 +4,10 @@ import SpinnerLoading from "../utils/SpinnerLoading";
 import OktaSignInWidget from "./OktaSignInWidget";
 
 const LoginWidget = ({ config}) =>{
-    const {oktaAuth, authState} = useOktaAuth();
+    const { oktaAuth, authState } = useOktaAuth();
     const onSuccess = (tokens) => {
         oktaAuth.handleLoginRedirect(tokens);
     };
-
     const onError = (err) => {
         console.log('Sign in error: ', err);
     }
@@ -17,9 +16,10 @@ const LoginWidget = ({ config}) =>{
             <SpinnerLoading/>
         );
     }
-    return authState.isAuthenticated ? 
-    <Redirect to={{pathname: '/'}}/>
-    :
+    return authState.isAuthenticated ?
+    // if authenticated, go to home page;
+    <Redirect to={{ pathname: '/' }} />
+:
     <OktaSignInWidget config={config} onSuccess={onSuccess} onError={onError} />
 };
 export default LoginWidget;
