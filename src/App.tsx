@@ -7,7 +7,7 @@ import Footer from "./layouts/NavbarAndFooter/Footer";
 import HomePage from "./layouts/NavbarAndFooter/HomePage/HomePage";
 import SearchBooksPage from "./searchbookspage/SearchBooksPage";
 import { Redirect, Route, Switch, useHistory } from "react-router-dom";
-import BookCheckoutPage from "./layouts/BookCheckoutPage/BookCheckoutPage";
+import BookCheckoutPage from './layouts/BookCheckoutPage/BookCheckoutPage';
 import { oktaConfig } from "./lib/oktaConfig";
 import {OktaAuth, toRelativeUrl} from "@okta/okta-auth-js";
 import { Security , LoginCallback} from "@okta/okta-react";
