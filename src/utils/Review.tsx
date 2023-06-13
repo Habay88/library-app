@@ -19,7 +19,13 @@ const Review: React.FC<{review: ReviewModel}> = (props) => {
 <StarsReviews rating={props.review.rating} size={16}/>
 </div>
 </div>
+<div className='mt-2'>
+<p>
+  {props.review.reviewDescription}
+</p>
+</div>
     </div>
+    
   )
 }
 
