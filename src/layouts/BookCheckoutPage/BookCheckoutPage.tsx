@@ -19,6 +19,10 @@ const BookCheckoutPage = () => {
   const [isLoadingReview, setIsLoadingReview] = useState(true);
 
 
+  //review state
+  const [reviews, setReviews] = useState<ReviewModel[]>([]);
+  const[totalStars, setTotalStars] = useState(0);
+  const [isLoadingReview, setIsLoadingReview] = useState(true);
   const bookId = (window.location.pathname).split('/')[2];
 
   useEffect(() => {
@@ -73,23 +77,8 @@ useEffect(()=>{
             book_id: responseData[key].bookId,
             reviewDescription: responseData[key].reviewDescription,
 
-        });
-        weightedStarReviews = weightedStarReviews +  responseData[key].rating;
-    }
-if(loadedReviews){
-    const round =(Math.round((weightedStarReviews / loadedReviews.length) * 2)/2).toFixed(1);
-    setTotalStars(Number(round));
-}
-setReviews(loadedReviews);
-setIsLoadingReview(false);
-    };
-    fetchBookReviews().catch((error: any)=>{
-        setIsLoadingReview(false);
-        setHttpError(error.message);
-    })
-},[]);
 
-  if (isLoading || isLoadingReview) {
+  if (isLoading) {
       return (
           <SpinnerLoading />
       )
@@ -120,13 +109,10 @@ setIsLoadingReview(false);
                           <h2>{book?.title}</h2>
                           <h5 className='text-primary'>{book?.author}</h5>
                           <p className='lead'>{book?.description}</p>
-                          <StarsReviews rating={totalStars} size={32}/>
                       </div>
                   </div>
-                  <CheckoutAndReviewBox book={book} mobile={false}/>
               </div>
               <hr />
-              <LatestReviews reviews={reviews} bookId={book?.id} mobile={false}/>
           </div>
           <div className='container d-lg-none mt-5'>
               <div className='d-flex justify-content-center align-items-center'>
@@ -142,12 +128,9 @@ setIsLoadingReview(false);
                       <h2>{book?.title}</h2>
                       <h5 className='text-primary'>{book?.author}</h5>
                       <p className='lead'>{book?.description}</p>
-                      <StarsReviews rating={totalStars} size={32}/>
                   </div>
               </div>
-              <CheckoutAndReviewBox book={book} mobile={true}/>
               <hr />
-              <LatestReviews reviews={reviews} bookId={book?.id} mobile={true} />
           </div>
       </div>
   );
