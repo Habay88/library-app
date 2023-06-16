@@ -7,9 +7,10 @@ import { error } from 'console';
 import StarsReviews from '../../utils/StarsReviews';
 import CheckoutAndReviewBox from './CheckoutAndReviewBox';
 import LatestReviews from './LatestReviews';
+import { useOktaAuth } from '@okta/okta-react';
 
 const BookCheckoutPage = () => {
-
+const {authState} = useOktaAuth();
   const [book, setBook] = useState<BookModel>();
   const [isLoading, setIsLoading] = useState(true);
   const [httpError, setHttpError] = useState(null);
@@ -17,7 +18,9 @@ const BookCheckoutPage = () => {
   const [reviews, setReviews] = useState<ReviewModel[]>([]);
   const [totalStars, setTotalStars] = useState(0);
   const [isLoadingReview, setIsLoadingReview] = useState(true);
-
+// loans count
+const [currentLoansCount, setCurrentLoansCount] = useState(0);
+const [isLoadingCurrentLoansCount, setIsLoadingCurrentLoansCount] = useState(true) ; 
 
   const bookId = (window.location.pathname).split('/')[2];
 
@@ -89,7 +92,32 @@ setIsLoadingReview(false);
     })
 },[]);
 
-  if (isLoading || isLoadingReview) {
+useEffect(()=>{
+    const fetchUserCurrentLoansCount =async()=>{
+    if(authState && authState.isAuthenticated){
+        const url = `http://localhost:1988/api/books/secure/currentloans/count`;
+      const requestOptions={
+        method: 'GET',
+        headers:{
+            Authorization: `Bearer ${authState.accessToken?.accessToken}`,
+        'Content-Type': 'application/json'
+        }
+      };
+      const currentLoanCountResponse = await fetch(url, requestOptions);
+      if(!currentLoanCountResponse.ok){
+        throw new Error("Something went wrong!");
+      }
+      const currentLoanCountResponseJson = await currentLoanCountResponse.json();   
+      setCurrentLoansCount(currentLoanCountResponseJson);
+    }
+    }
+    fetchUserCurrentLoansCount().catch((error: any)=>{
+        setIsLoadingCurrentLoansCount(false);
+        setHttpError(error.message);
+    }
+    )
+}, [authState]);
+  if (isLoading || isLoadingReview || isLoadingCurrentLoansCount) {
       return (
           <SpinnerLoading />
       )
@@ -123,7 +151,7 @@ setIsLoadingReview(false);
                           <StarsReviews rating={totalStars} size={32}/>
                       </div>
                   </div>
-                  <CheckoutAndReviewBox book={book} mobile={false}/>
+                  <CheckoutAndReviewBox book={book} mobile={false} currentLoansCount={currentLoansCount}/>
               </div>
               <hr />
               <LatestReviews reviews={reviews} bookId={book?.id} mobile={false}/>
@@ -145,7 +173,7 @@ setIsLoadingReview(false);
                       <StarsReviews rating={totalStars} size={32}/>
                   </div>
               </div>
-              <CheckoutAndReviewBox book={book} mobile={true}/>
+              <CheckoutAndReviewBox book={book} mobile={true} currentLoansCount={currentLoansCount}/>
               <hr />
               <LatestReviews reviews={reviews} bookId={book?.id} mobile={true} />
           </div>
