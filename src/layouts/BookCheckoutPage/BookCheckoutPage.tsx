@@ -3,7 +3,7 @@ import { useEffect,useState } from 'react';
 import BookModel from '../../models/BookModel';
 import SpinnerLoading from '../../utils/SpinnerLoading';
 import ReviewModel from '../../models/ReviewModel';
-import { error } from 'console';
+//import { error } from 'console';
 import StarsReviews from '../../utils/StarsReviews';
 import CheckoutAndReviewBox from './CheckoutAndReviewBox';
 import LatestReviews from './LatestReviews';
@@ -90,7 +90,7 @@ setIsLoadingReview(false);
         setIsLoadingReview(false);
         setHttpError(error.message);
     })
-},[]);
+},[bookId]);
 
 useEffect(()=>{
     const fetchUserCurrentLoansCount =async()=>{
@@ -110,6 +110,7 @@ useEffect(()=>{
       const currentLoanCountResponseJson = await currentLoanCountResponse.json();   
       setCurrentLoansCount(currentLoanCountResponseJson);
     }
+    setIsLoadingCurrentLoansCount(false);
     }
     fetchUserCurrentLoansCount().catch((error: any)=>{
         setIsLoadingCurrentLoansCount(false);
