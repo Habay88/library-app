@@ -22,6 +22,10 @@ const {authState} = useOktaAuth();
 const [currentLoansCount, setCurrentLoansCount] = useState(0);
 const [isLoadingCurrentLoansCount, setIsLoadingCurrentLoansCount] = useState(true) ; 
 
+// is book checked out ?
+const[isCheckedOut, setIsCheckedOut] = useState(false);
+const [isLoadingBookCheckedOut, setIsLoadingBookCheckedOut] = useState(true);
+
   const bookId = (window.location.pathname).split('/')[2];
 
   useEffect(() => {
@@ -118,6 +122,26 @@ useEffect(()=>{
     }
     )
 }, [authState]);
+
+useEffect(()=>{
+    const fetchUserCheckedOutBook =async () => {
+        if(authState && authState.isAuthenticated){
+            const url = `http://localhost:1988/api/books/secure/ischeckedOut/byuser/?bookId=${bookId}`;
+            const requestOptions={
+                method: "GET",
+                headers:{
+                    Authorization: `Bearer ${authState.accessToken?.accessToken}`,
+                    'Content-Type': "application/json"
+                }
+            }
+            const bookCheckedOut = await fetch(url, requestOptions);
+        }
+    }
+    fetchUserCheckedOutBook().catch((error: any)=>{
+        setIsLoadingBookCheckedOut(false);
+        setHttpError(error.message);
+    })
+})
   if (isLoading || isLoadingReview || isLoadingCurrentLoansCount) {
       return (
           <SpinnerLoading />
