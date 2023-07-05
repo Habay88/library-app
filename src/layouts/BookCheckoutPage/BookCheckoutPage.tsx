@@ -97,7 +97,7 @@ setIsLoadingReview(false);
 },[bookId]);
 
 useEffect(()=>{
-    const fetchUserCurrentLoansCount =async()=>{
+    const fetchUserCurrentLoansCount = async () =>{
     if(authState && authState.isAuthenticated){
         const url = `http://localhost:1988/api/books/secure/currentloans/count`;
       const requestOptions={
@@ -131,18 +131,25 @@ useEffect(()=>{
                 method: "GET",
                 headers:{
                     Authorization: `Bearer ${authState.accessToken?.accessToken}`,
-                    'Content-Type': "application/json"
+                    'Content-Type': 'application/json'
                 }
-            }
+            };
             const bookCheckedOut = await fetch(url, requestOptions);
+            if(!bookCheckedOut.ok){
+                throw new Error("Something went wrong !");
+            }
+            const bookCheckedOutResponseJson = await bookCheckedOut.json();
+            setIsCheckedOut(bookCheckedOutResponseJson);
         }
+        setIsLoadingBookCheckedOut(false);
     }
     fetchUserCheckedOutBook().catch((error: any)=>{
         setIsLoadingBookCheckedOut(false);
         setHttpError(error.message);
     })
-})
-  if (isLoading || isLoadingReview || isLoadingCurrentLoansCount) {
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [authState]);
+  if (isLoading || isLoadingReview || isLoadingCurrentLoansCount || isLoadingBookCheckedOut) {
       return (
           <SpinnerLoading />
       )
@@ -176,7 +183,7 @@ useEffect(()=>{
                           <StarsReviews rating={totalStars} size={32}/>
                       </div>
                   </div>
-                  <CheckoutAndReviewBox book={book} mobile={false} currentLoansCount={currentLoansCount}/>
+                  <CheckoutAndReviewBox book={book} mobile={false} currentLoansCount={currentLoansCount} isAuthenticated={authState?.isAuthenticated} isCheckedOut={isCheckedOut}/>
               </div>
               <hr />
               <LatestReviews reviews={reviews} bookId={book?.id} mobile={false}/>
@@ -198,7 +205,7 @@ useEffect(()=>{
                       <StarsReviews rating={totalStars} size={32}/>
                   </div>
               </div>
-              <CheckoutAndReviewBox book={book} mobile={true} currentLoansCount={currentLoansCount}/>
+              <CheckoutAndReviewBox book={book} mobile={true} currentLoansCount={currentLoansCount} isAuthenticated={authState?.isAuthenticated} isCheckedOut={isCheckedOut}/>
               <hr />
               <LatestReviews reviews={reviews} bookId={book?.id} mobile={true} />
           </div>
