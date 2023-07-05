@@ -58,7 +58,7 @@ const [isLoadingBookCheckedOut, setIsLoadingBookCheckedOut] = useState(true);
           setIsLoading(false);
           setHttpError(error.message);
       })
-  }, []);
+  }, [bookId]);
 useEffect(()=>{
     const fetchBookReviews = async () =>{
         const reviewUrl: string = `http://localhost:1988/api/reviews/search/findByBookId?bookId=${bookId}`
